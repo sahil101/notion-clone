@@ -1,18 +1,21 @@
+import { randomUUID } from "crypto";
+import { twMerge } from "tailwind-merge";
+import clsx from "clsx";
+import React from "react";
+import Image from "next/image";
+
 import TitleSection from "@/components/landing-page/title-section";
 import { Button } from "@/components/ui/Button";
-import Image from "next/image";
+import { CustomCard } from "@/components/landing-page/custom-card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { CardContent, CardDescription, CardTitle } from "@/components/ui/card";
+import { CLIENTS, PRICING_CARDS, PRICING_PLANS, USERS } from "@/lib/constant";
+
 import Banner from "../../../public/appBanner.png";
 import Cal from "../../../public/cal.png";
 import CheckIcon from "../../../public/icons/check.svg";
 import  Diamond from "../../../public/icons/diamond.svg";
-import React from "react";
-import { CLIENTS, PRICING_CARDS, PRICING_PLANS, USERS } from "@/lib/constant";
-import { randomUUID } from "crypto";
-import { twMerge } from "tailwind-merge";
-import clsx from "clsx";
-import { CustomCard } from "@/components/landing-page/custom-card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { CardContent, CardDescription, CardTitle } from "@/components/ui/card";
+
 const Home = () => {
   return (
     <section>
