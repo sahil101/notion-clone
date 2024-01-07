@@ -1,40 +1,16 @@
-import { pgTable, pgEnum, uuid, timestamp, text, foreignKey, jsonb, boolean, bigint, integer } from "drizzle-orm/pg-core"
+import { pgTable, foreignKey, pgEnum, uuid, timestamp, text, boolean, bigint, integer, jsonb } from "drizzle-orm/pg-core"
   import { sql } from "drizzle-orm"
 
-export const keyStatus = pgEnum("key_status", ['expired', 'invalid', 'valid', 'default'])
-export const keyType = pgEnum("key_type", ['stream_xchacha20', 'secretstream', 'secretbox', 'kdf', 'generichash', 'shorthash', 'auth', 'hmacsha256', 'hmacsha512', 'aead-det', 'aead-ietf'])
-export const factorType = pgEnum("factor_type", ['webauthn', 'totp'])
-export const factorStatus = pgEnum("factor_status", ['verified', 'unverified'])
-export const aalLevel = pgEnum("aal_level", ['aal3', 'aal2', 'aal1'])
-export const codeChallengeMethod = pgEnum("code_challenge_method", ['plain', 's256'])
-export const pricingType = pgEnum("pricing_type", ['recurring', 'one_time'])
-export const pricingPlanInterval = pgEnum("pricing_plan_interval", ['year', 'month', 'week', 'day'])
-export const subscriptionStatus = pgEnum("subscription_status", ['unpaid', 'past_due', 'incomplete_expired', 'incomplete', 'canceled', 'active', 'trialing'])
+export const keyStatus = pgEnum("key_status", ['default', 'valid', 'invalid', 'expired'])
+export const keyType = pgEnum("key_type", ['aead-ietf', 'aead-det', 'hmacsha512', 'hmacsha256', 'auth', 'shorthash', 'generichash', 'kdf', 'secretbox', 'secretstream', 'stream_xchacha20'])
+export const aalLevel = pgEnum("aal_level", ['aal1', 'aal2', 'aal3'])
+export const codeChallengeMethod = pgEnum("code_challenge_method", ['s256', 'plain'])
+export const factorStatus = pgEnum("factor_status", ['unverified', 'verified'])
+export const factorType = pgEnum("factor_type", ['totp', 'webauthn'])
+export const pricingPlanInterval = pgEnum("pricing_plan_interval", ['day', 'week', 'month', 'year'])
+export const pricingType = pgEnum("pricing_type", ['one_time', 'recurring'])
+export const subscriptionStatus = pgEnum("subscription_status", ['trialing', 'active', 'canceled', 'incomplete', 'incomplete_expired', 'past_due', 'unpaid'])
 
-
-export const workspaces = pgTable("workspaces", {
-	id: uuid("id").defaultRandom().primaryKey().notNull(),
-	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow(),
-	workspaceOwner: uuid("workspace_owner").notNull(),
-	title: text("title").notNull(),
-	iconId: text("icon_id").notNull(),
-	data: text("data"),
-	inTrash: text("in_trash"),
-	logo: text("logo"),
-	bannerUrl: text("banner_url"),
-});
-
-export const folders = pgTable("folders", {
-	folderId: uuid("folder_id").defaultRandom().primaryKey().notNull(),
-	workspaceId: uuid("workspace_id").notNull().references(() => workspaces.id, { onDelete: "cascade" } ),
-	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }),
-	title: text("title").notNull(),
-	iconId: text("icon_id").notNull(),
-	data: text("data"),
-	inTrash: text("in_trash"),
-	bannerUrl: text("banner_url"),
-	logo: text("logo"),
-});
 
 export const files = pgTable("files", {
 	id: uuid("id").defaultRandom().primaryKey().notNull(),
@@ -47,21 +23,6 @@ export const files = pgTable("files", {
 	workspaceId: uuid("workspace_id").notNull().references(() => workspaces.id, { onDelete: "cascade" } ),
 	bannerUrl: text("banner_url"),
 	logo: text("logo"),
-});
-
-export const users = pgTable("users", {
-	id: uuid("id").primaryKey().notNull(),
-	fullName: text("full_name"),
-	avatarUrl: text("avatar_url"),
-	billingAddress: jsonb("billing_address"),
-	paymentMethod: jsonb("payment_method"),
-	email: text("email"),
-	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'string' }),
-});
-
-export const customers = pgTable("customers", {
-	id: uuid("id").primaryKey().notNull(),
-	stripeCustomerId: text("stripe_customer_id"),
 });
 
 export const prices = pgTable("prices", {
@@ -93,7 +54,7 @@ export const subscriptions = pgTable("subscriptions", {
 	userId: uuid("user_id").notNull(),
 	status: subscriptionStatus("status"),
 	metadata: jsonb("metadata"),
-	priceId: text("price_id").references(() => prices.id),
+	priceId: text("price_id").references(() => prices.id).references(() => prices.id),
 	quantity: integer("quantity"),
 	cancelAtPeriodEnd: boolean("cancel_at_period_end"),
 	created: timestamp("created", { withTimezone: true, mode: 'string' }).default(sql`now()`).notNull(),
@@ -104,4 +65,42 @@ export const subscriptions = pgTable("subscriptions", {
 	canceledAt: timestamp("canceled_at", { withTimezone: true, mode: 'string' }).default(sql`now()`),
 	trialStart: timestamp("trial_start", { withTimezone: true, mode: 'string' }).default(sql`now()`),
 	trialEnd: timestamp("trial_end", { withTimezone: true, mode: 'string' }).default(sql`now()`),
+});
+
+export const users = pgTable("users", {
+	id: uuid("id").primaryKey().notNull(),
+	fullName: text("full_name"),
+	avatarUrl: text("avatar_url"),
+	billingAddress: jsonb("billing_address"),
+	paymentMethod: jsonb("payment_method"),
+	email: text("email"),
+	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'string' }),
+});
+
+export const customers = pgTable("customers", {
+	id: uuid("id").primaryKey().notNull(),
+	stripeCustomerId: text("stripe_customer_id"),
+});
+
+export const folders = pgTable("folders", {
+	folderId: uuid("folder_id").defaultRandom().primaryKey().notNull(),
+	workspaceId: uuid("workspace_id").notNull().references(() => workspaces.id, { onDelete: "cascade" } ),
+	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }),
+	title: text("title").notNull(),
+	iconId: text("icon_id").notNull(),
+	data: text("data"),
+	inTrash: text("in_trash"),
+	bannerUrl: text("banner_url"),
+	logo: text("logo"),
+});
+
+export const workspaces = pgTable("workspaces", {
+	id: uuid("id").defaultRandom().primaryKey().notNull(),
+	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow(),
+	workspaceOwner: uuid("workspace_owner").notNull(),
+	title: text("title").notNull(),
+	iconId: text("icon_id").notNull(),
+	data: text("data"),
+	inTrash: text("in_trash"),
+	logo: text("logo"),
 });
