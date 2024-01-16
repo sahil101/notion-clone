@@ -7,6 +7,7 @@ import {
   products,
   // profiles,
   subscriptions,
+  users,
   workspaces,
 } from '../../../migrations/schema';
 // import { OutputBlockData } from '@editorjs/editorjs';
@@ -466,6 +467,7 @@ export type Customer = InferSelectModel<typeof customers>;
 export type Subscription = InferSelectModel<typeof subscriptions> & {
   prices: Price;
 };
+export type User = InferSelectModel<typeof users>;
 
 export type ProductWithPrice = Product & {
   prices?: Price[];
