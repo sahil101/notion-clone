@@ -1,6 +1,6 @@
 {
-  "id": "4fd7db06-fb02-4c60-8af3-dd607a2c8ff8",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "95f92545-d23f-49ff-8706-08338e899c1d",
+  "prevId": "098e9732-fc5d-4104-a281-8c5751b17446",
   "version": "5",
   "dialect": "pg",
   "tables": {
@@ -90,7 +90,8 @@
           "name": "created_at",
           "type": "timestamp with time zone",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true,
+          "default": "now()"
         },
         "title": {
           "name": "title",
@@ -137,8 +138,8 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "files_folder_id_folders_folder_id_fk": {
-          "name": "files_folder_id_folders_folder_id_fk",
+        "files_folder_id_folders_id_fk": {
+          "name": "files_folder_id_folders_id_fk",
           "tableFrom": "files",
           "tableTo": "folders",
           "schemaTo": "public",
@@ -146,7 +147,7 @@
             "folder_id"
           ],
           "columnsTo": [
-            "folder_id"
+            "id"
           ],
           "onDelete": "cascade",
           "onUpdate": "no action"
@@ -173,8 +174,8 @@
       "name": "folders",
       "schema": "",
       "columns": {
-        "folder_id": {
-          "name": "folder_id",
+        "id": {
+          "name": "id",
           "type": "uuid",
           "primaryKey": true,
           "notNull": true,
@@ -190,7 +191,8 @@
           "name": "created_at",
           "type": "timestamp with time zone",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true,
+          "default": "now()"
         },
         "title": {
           "name": "title",
@@ -387,7 +389,7 @@
           "name": "created_at",
           "type": "timestamp with time zone",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": "now()"
         },
         "workspace_owner": {
