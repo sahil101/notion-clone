@@ -1,7 +1,6 @@
 import { InferSelectModel } from 'drizzle-orm';
 import {
   customers,
-  files,
   folders,
   prices,
   products,
@@ -10,6 +9,7 @@ import {
   users,
   workspaces,
 } from '../../../migrations/schema';
+import { files } from './schema';
 // import { OutputBlockData } from '@editorjs/editorjs';
 // import Stripe from 'stripe';
 
