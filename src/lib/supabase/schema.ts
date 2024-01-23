@@ -47,8 +47,7 @@ export const files = pgTable('files', {
     workspaceId: uuid('workspace_id')
       .notNull()
       .references(() => workspaces.id, { onDelete: 'cascade' }),
-    bannerUrl: text('banner_url'),
-    logo: text('logo')
+    bannerUrl: text('banner_url')
 });
   
 export const subscriptions = pgTable("subscriptions", {

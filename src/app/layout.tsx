@@ -6,7 +6,7 @@ import {DM_Sans} from 'next/font/google'
 import { twMerge } from "tailwind-merge";
 import AppStateProvider from "@/lib/providers/state-provider";
 import { SupbaseUserProvider } from "@/lib/providers/supabase-user-provider";
-db
+import { Toaster } from "@/components/ui/toaster";
 const inter = DM_Sans({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -24,6 +24,7 @@ export default function RootLayout({
           <AppStateProvider>
             <SupbaseUserProvider>
               {children}
+              <Toaster />
               </SupbaseUserProvider>
             </AppStateProvider>
         </ThemeProvider>

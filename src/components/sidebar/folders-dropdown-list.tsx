@@ -9,7 +9,7 @@ import { v4 } from 'uuid';
 import { createFolder } from '@/lib/supabase/queries';
 import { useToast } from '../ui/use-toast';
 import { Accordion } from '../ui/accordion';
-// import Dropdown from './Dropdown';
+import Dropdown from './Dropdown';
 // import useSupabaseRealtime from '@/lib/hooks/useSupabaseRealtime';
 // import { useSubscriptionModal } from '@/lib/providers/subscription-modal-provider';
 
@@ -29,7 +29,7 @@ const FoldersDropdownList: React.FC<FoldersDropdownListProps> = ({
   const [folders, setFolders] = useState(workspaceFolders);
   const { subscription } = useSupabaseUser();
 
-  //effec set nitial satte server app state
+  //useEffect to  set initial server app state
   useEffect(() => {
     if (workspaceFolders.length > 0) {
       dispatch({
@@ -127,7 +127,7 @@ const FoldersDropdownList: React.FC<FoldersDropdownListProps> = ({
           />
         </TooltipComponent>
       </div>
-      {/* <Accordion
+      <Accordion
         type="multiple"
         defaultValue={[folderId || '']}
         className="pb-20"
@@ -143,7 +143,7 @@ const FoldersDropdownList: React.FC<FoldersDropdownListProps> = ({
               iconId={folder.iconId}
             />
           ))}
-      </Accordion> */}
+      </Accordion>
     </>
   );
 };
