@@ -97,7 +97,7 @@ const Sidebar: React.FC<SidebarProps> = async ({ params, className }) => {
           />
         </ScrollArea>
       </div>
-      {/* <UserCard subscription={subscriptionData} /> */}
+      <UserCard subscription={subscriptionData} />
     </aside>
   );
 };
