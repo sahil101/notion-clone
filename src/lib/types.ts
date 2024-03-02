@@ -20,6 +20,9 @@ export const FormSchema = z.object({
 //   };
 // };
 
+export const UploadBannerFormSchema = z.object({
+  banner: z.string().describe('Banner Image'),
+});
 
 export const CreateWorkspaceFormSchema = z.object({
   workspaceName: z.string().describe('Workspace Name')
