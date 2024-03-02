@@ -1,0 +1,1 @@
+ALTER TABLE "workspaces" ADD COLUMN "banner_url" text;
