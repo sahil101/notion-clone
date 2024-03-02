@@ -15,7 +15,8 @@ export const workspaces = pgTable('workspaces', {
     iconId: text('icon_id').notNull(),
     data: text('data'),
     inTrash: text('in_trash'),
-    logo: text('logo')
+    logo: text('logo'),
+    bannerUrl: text('banner_url')
 });
   
 export const folders = pgTable('folders', {
