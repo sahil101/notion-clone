@@ -98,8 +98,6 @@ const SettingsForm = () => {
     // }
     await addCollaborators([profile], workspaceId);
     setCollaborators([...collaborators, profile]);
-
-    router.refresh();
   };
 
   //remove collaborators
@@ -382,7 +380,26 @@ const SettingsForm = () => {
             Delete Workspace
           </Button>
         </Alert>
-        <p className="flex items-center gap-2 mt-6">
+        <AlertDialog open={openAlertMessage}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDescription>
+              Changing a Shared workspace to a Private workspace will remove all
+              collaborators permanantly.
+            </AlertDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setOpenAlertMessage(false)}>
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction onClick={onClickAlertConfirm}>
+              Continue
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+        {/* <p className="flex items-center gap-2 mt-6">
           <UserIcon size={20} /> Profile
         </p>
         <Separator />
@@ -412,7 +429,7 @@ const SettingsForm = () => {
               disabled={uploadingProfilePic}
             />
           </div>
-        </div>
+        </div> */}
         {/* <LogoutButton>
           <div className="flex items-center">
             <LogOut />
@@ -460,25 +477,7 @@ const SettingsForm = () => {
           </div>
         )}
       </>
-      <AlertDialog open={openAlertMessage}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-            <AlertDescription>
-              Changing a Shared workspace to a Private workspace will remove all
-              collaborators permanantly.
-            </AlertDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => setOpenAlertMessage(false)}>
-              Cancel
-            </AlertDialogCancel>
-            <AlertDialogAction onClick={onClickAlertConfirm}>
-              Continue
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog> */}
+       */}
         </>
     </div>
   );

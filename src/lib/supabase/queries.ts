@@ -275,8 +275,6 @@ export const updateWorkspace = async (
       .update(workspaces)
       .set(workspace)
       .where(eq(workspaces.id, workspaceId));
-
-    revalidatePath(`dashboard${workspaceId}`)
     return { data: null, error: null };
   } catch (error) {
     console.log(error);
@@ -324,4 +322,11 @@ export const getFolderDetails = async (folderId: string) => {
   } catch (error) {
     return { data: [], error: 'Error' };
   }
+};
+
+export const findUser = async (userId: string) => {
+  const response = await db.query.users.findFirst({
+    where: (u, { eq }) => eq(u.id, userId),
+  });
+  return response;
 };
