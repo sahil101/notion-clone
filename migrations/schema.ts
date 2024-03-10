@@ -10,6 +10,8 @@ export const factorType = pgEnum("factor_type", ['webauthn', 'totp'])
 export const pricingPlanInterval = pgEnum("pricing_plan_interval", ['year', 'month', 'week', 'day'])
 export const pricingType = pgEnum("pricing_type", ['recurring', 'one_time'])
 export const subscriptionStatus = pgEnum("subscription_status", ['unpaid', 'past_due', 'incomplete_expired', 'incomplete', 'canceled', 'active', 'trialing'])
+export const equalityOp = pgEnum("equality_op", ['in', 'gte', 'gt', 'lte', 'lt', 'neq', 'eq'])
+export const action = pgEnum("action", ['ERROR', 'TRUNCATE', 'DELETE', 'UPDATE', 'INSERT'])
 
 
 export const prices = pgTable("prices", {
@@ -36,7 +38,6 @@ export const folders = pgTable("folders", {
 	data: text("data"),
 	inTrash: text("in_trash"),
 	bannerUrl: text("banner_url"),
-	logo: text("logo"),
 });
 
 export const users = pgTable("users", {

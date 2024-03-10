@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import db from "../lib/supabase/db";
 import { ThemeProvider } from "@/lib/providers/next-theme-provider";
 import {DM_Sans} from 'next/font/google'
 import { twMerge } from "tailwind-merge";
 import AppStateProvider from "@/lib/providers/state-provider";
 import { SupbaseUserProvider } from "@/lib/providers/supabase-user-provider";
 import { Toaster } from "@/components/ui/toaster";
+import { SocketProvider } from "@/lib/providers/socket-provider";
+
 const inter = DM_Sans({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,8 +24,10 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme={"dark"} enableSystem>
           <AppStateProvider>
             <SupbaseUserProvider>
-              {children}
-              <Toaster />
+              <SocketProvider>
+                {children}
+                <Toaster />
+                </SocketProvider>
               </SupbaseUserProvider>
             </AppStateProvider>
         </ThemeProvider>

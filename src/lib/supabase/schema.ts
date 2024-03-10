@@ -29,8 +29,7 @@ export const folders = pgTable('folders', {
     iconId: text('icon_id').notNull(),
     data: text('data'),
     inTrash: text('in_trash'),
-    bannerUrl: text('banner_url'),
-    logo: text('logo')
+    bannerUrl: text('banner_url')
 });
   
 export const files = pgTable('files', {
