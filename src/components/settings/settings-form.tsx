@@ -53,15 +53,15 @@ import { ScrollArea } from '../ui/scroll-area';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Alert, AlertDescription } from '../ui/alert';
 import CypressProfileIcon from '../icons/cypressProfileIcon';
-// import LogoutButton from '../global/logout-button';
+import LogoutButton from '../global/logout-button';
 import Link from 'next/link';
-// import { useSubscriptionModal } from '@/lib/providers/subscription-modal-provider';
-// import { postData } from '@/lib/utils';
+import { useSubscriptionModal } from '@/lib/providers/subscription-modal-provider';
+import { postData } from '@/lib/utils';
 
 const SettingsForm = () => {
   const { toast } = useToast();
   const { user, subscription } = useSupabaseUser();
-  // const { open, setOpen } = useSubscriptionModal();
+  const { open, setOpen } = useSubscriptionModal();
   const router = useRouter();
   const supabase = createClientComponentClient();
   const { state, workspaceId, dispatch } = useAppState();
@@ -380,26 +380,7 @@ const SettingsForm = () => {
             Delete Workspace
           </Button>
         </Alert>
-        <AlertDialog open={openAlertMessage}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-            <AlertDescription>
-              Changing a Shared workspace to a Private workspace will remove all
-              collaborators permanantly.
-            </AlertDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => setOpenAlertMessage(false)}>
-              Cancel
-            </AlertDialogCancel>
-            <AlertDialogAction onClick={onClickAlertConfirm}>
-              Continue
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-        {/* <p className="flex items-center gap-2 mt-6">
+        <p className="flex items-center gap-2 mt-6">
           <UserIcon size={20} /> Profile
         </p>
         <Separator />
@@ -429,8 +410,8 @@ const SettingsForm = () => {
               disabled={uploadingProfilePic}
             />
           </div>
-        </div> */}
-        {/* <LogoutButton>
+        </div>
+        <LogoutButton>
           <div className="flex items-center">
             <LogOut />
           </div>
@@ -456,9 +437,9 @@ const SettingsForm = () => {
               type="button"
               size="sm"
               variant={'secondary'}
-              disabled={loadingPortal}
+              // disabled={loadingPortal}
               className="text-sm"
-              onClick={redirectToCustomerPortal}
+              // onClick={redirectToCustomerPortal}
             >
               Manage Subscription
             </Button>
@@ -477,8 +458,25 @@ const SettingsForm = () => {
           </div>
         )}
       </>
-       */}
-        </>
+     <AlertDialog open={openAlertMessage}>
+     <AlertDialogContent>
+       <AlertDialogHeader>
+         <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+         <AlertDescription>
+           Changing a Shared workspace to a Private workspace will remove all
+           collaborators permanantly.
+         </AlertDescription>
+       </AlertDialogHeader>
+       <AlertDialogFooter>
+         <AlertDialogCancel onClick={() => setOpenAlertMessage(false)}>
+           Cancel
+         </AlertDialogCancel>
+         <AlertDialogAction onClick={onClickAlertConfirm}>
+           Continue
+         </AlertDialogAction>
+       </AlertDialogFooter>
+     </AlertDialogContent>
+   </AlertDialog>
     </div>
   );
 };
