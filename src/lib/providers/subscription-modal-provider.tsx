@@ -8,8 +8,8 @@ import {
   useEffect,
   useState,
 } from 'react';
-// import { useSupabaseUser } from './supabase-user-provider';
-// import { getUserSubscriptionStatus } from '../supabase/queries';
+import { useSupabaseUser } from './supabase-user-provider';
+import { getUserSubscriptionStatus } from '../supabase/queries';
 import SubscriptionModal from '@/components/global/subscription-modal';
 import { ProductWithPrice } from '../supabase/supabase.types';
 

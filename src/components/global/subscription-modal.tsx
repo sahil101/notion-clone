@@ -13,7 +13,7 @@ import { formatPrice, postData } from '@/lib/utils';
 import { Button } from '../ui/Button';
 import { Price, ProductWithPrice } from '@/lib/supabase/supabase.types';
 import { useToast } from '../ui/use-toast';
-// import { getStripe } from '@/lib/stripe/stripeClient';
+import { getStripe } from '@/lib/stripe/stripeClient';
 import Loader from '../loader';
 
 interface SubscriptionModalProps {
@@ -27,33 +27,33 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({ products }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useSupabaseUser();
 
-  // const onClickContinue = async (price: Price) => {
-  //   try {
-  //     setIsLoading(true);
-  //     if (!user) {
-  //       toast({ title: 'You must be logged in' });
-  //       setIsLoading(false);
-  //       return;
-  //     }
-  //     if (subscription) {
-  //       toast({ title: 'Already on a paid plan' });
-  //       setIsLoading(false);
-  //       return;
-  //     }
-  //     const { sessionId } = await postData({
-  //       url: '/api/create-checkout-session',
-  //       data: { price },
-  //     });
+  const onClickContinue = async (price: Price) => {
+    try {
+      setIsLoading(true);
+      if (!user) {
+        toast({ title: 'You must be logged in' });
+        setIsLoading(false);
+        return;
+      }
+      if (subscription) {
+        toast({ title: 'Already on a paid plan' });
+        setIsLoading(false);
+        return;
+      }
+      const { sessionId } = await postData({
+        url: '/api/create-checkout-session',
+        data: { price },
+      });
 
-  //     console.log('Getting Checkout for stripe');
-  //     // const stripe = await getStripe();
-  //     stripe?.redirectToCheckout({ sessionId });
-  //   } catch (error) {
-  //     toast({ title: 'Oppse! Something went wrong.', variant: 'destructive' });
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
+      console.log('Getting Checkout for stripe');
+      const stripe = await getStripe();
+      stripe?.redirectToCheckout({ sessionId });
+    } catch (error) {
+      toast({ title: 'Oppse! Something went wrong.', variant: 'destructive' });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <Dialog
@@ -86,7 +86,7 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({ products }) => {
                         {formatPrice(price)} / <small>{price.interval}</small>
                       </b>
                       <Button
-                        // onClick={() => onClickContinue(price)}
+                        onClick={() => onClickContinue(price)}
                         disabled={isLoading}
                       >
                         {isLoading ? <Loader /> : 'Upgrade ✨'}

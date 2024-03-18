@@ -1,5 +1,5 @@
 import { pgTable, foreignKey, pgEnum, text, boolean, bigint, integer, jsonb, uuid, timestamp } from "drizzle-orm/pg-core"
-  import { sql } from "drizzle-orm"
+  import { relations, sql } from "drizzle-orm"
 
 export const keyStatus = pgEnum("key_status", ['expired', 'invalid', 'valid', 'default'])
 export const keyType = pgEnum("key_type", ['stream_xchacha20', 'secretstream', 'secretbox', 'kdf', 'generichash', 'shorthash', 'auth', 'hmacsha256', 'hmacsha512', 'aead-det', 'aead-ietf'])
@@ -77,6 +77,7 @@ export const subscriptions = pgTable("subscriptions", {
 	trialEnd: timestamp("trial_end", { withTimezone: true, mode: 'string' }).default(sql`now()`),
 });
 
+
 export const collaborators = pgTable("collaborators", {
 	id: uuid("id").defaultRandom().primaryKey().notNull(),
 	workspaceId: uuid("workspace_id").notNull().references(() => workspaces.id, { onDelete: "cascade" } ),
@@ -121,3 +122,14 @@ export const workspaces = pgTable("workspaces", {
 	logo: text("logo"),
 	bannerUrl: text("banner_url"),
 });
+
+export const productsRelations = relations(products, ({ many }) => ({
+	prices: many(prices)
+  }))
+  
+  export const pricesRelations = relations(prices, ({ one }) => ({
+	product: one(products, {
+	  fields: [prices.productId],
+	  references: [products.id]
+	})
+  }))
