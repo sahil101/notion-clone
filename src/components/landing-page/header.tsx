@@ -157,14 +157,14 @@ const Header = () => {
                 <ListItem
                   key={'ProPlan'}
                   title={
-                    <div className="flex gap-2 items-center ">
+                    (<div className="flex gap-2 items-center ">
                       <Image
                         src={Diamond}
                         alt="Pro Plan Diamond Icon"
                       />
                       <span>Pro Plan</span>
-                    </div>
-                  }
+                    </div>) as any
+                  } 
                   href={'#'}
                 >
                   Unlock full power with collaboration.

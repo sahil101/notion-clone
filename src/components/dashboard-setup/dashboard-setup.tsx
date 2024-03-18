@@ -85,7 +85,7 @@ export const DashboardSetup: React.FC<DashboardSetupProps> = ({
 
     // Create a new workspace record and handle potential errors
     try {
-      const newWorkspace: workspace = {
+      const newWorkspace: workspace | any = {
         data: null,
         createdAt: new Date().toISOString(),
         iconId: selectedEmoji,

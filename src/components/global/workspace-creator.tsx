@@ -43,7 +43,7 @@ const WorkspaceCreator = () => {
     setIsLoading(true);
     const uuid = v4();
     if (user?.id) {
-      const newWorkspace: workspace = {
+      const newWorkspace: workspace | any = {
         data: null,
         createdAt: new Date().toISOString(),
         iconId: '💼',
