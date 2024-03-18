@@ -1,5 +1,5 @@
-// import { SubscriptionModalProvider } from '@/lib/providers/subscription-modal-provider';
-// import { getActiveProductsWithPrices } from '@/lib/supabase/queries';
+import { SubscriptionModalProvider } from '@/lib/providers/subscription-modal-provider';
+import { getActiveProductsWithPrice } from '@/lib/supabase/queries';
 import React from 'react';
 
 interface LayoutProps {
@@ -19,14 +19,14 @@ search param is going to be outdates in this layout component because it is not 
 //Putting the subscription modal Provider here because this part of the app gets access to the users and subscription information
 
 const Layout: React.FC<LayoutProps> = async ({ children, params }) => {
-//   const { data: products, error } = await getActiveProductsWithPrices();
-//   if (error) throw new Error();
+  const { data: products, error } = await getActiveProductsWithPrice();
+  if (error) throw new Error();
 
   return (
     <main className="flex overflow-hidden h-screen">
-      {/* <SubscriptionModalProvider products={products}> */}
+      <SubscriptionModalProvider products={products}>
         {children}
-      {/* </SubscriptionModalProvider> */}
+      </SubscriptionModalProvider>
     </main>
   );
 };

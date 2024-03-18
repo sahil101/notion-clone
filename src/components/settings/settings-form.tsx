@@ -74,28 +74,27 @@ const SettingsForm = () => {
   const [uploadingLogo, setUploadingLogo] = useState(false);
   const [loadingPortal, setLoadingPortal] = useState(false);
 
-  //WIP PAYMENT PORTAL
+  const redirectToCustomerPortal = async () => {
+    setLoadingPortal(true);
+    try {
+      const { url, error } = await postData({
+        url: '/api/create-portal-link',
+      });
+      window.location.assign(url);
+    } catch (error) {
+      console.log(error);
+      setLoadingPortal(false);
+    }
+    setLoadingPortal(false);
+  };
 
-  // const redirectToCustomerPortal = async () => {
-  //   setLoadingPortal(true);
-  //   try {
-  //     const { url, error } = await postData({
-  //       url: '/api/create-portal-link',
-  //     });
-  //     window.location.assign(url);
-  //   } catch (error) {
-  //     console.log(error);
-  //     setLoadingPortal(false);
-  //   }
-  //   setLoadingPortal(false);
-  // };
   //addcollborators
   const addCollaborator = async (profile: User) => {
     if (!workspaceId) return;
-    // if (subscription?.status !== 'active' && collaborators.length >= 2) {
-    //   // setOpen(true);
-    //   return;
-    // }
+    if (subscription?.status !== 'active' && collaborators.length >= 2) {
+      setOpen(true);
+      return;
+    }
     await addCollaborators([profile], workspaceId);
     setCollaborators([...collaborators, profile]);
   };
@@ -437,9 +436,9 @@ const SettingsForm = () => {
               type="button"
               size="sm"
               variant={'secondary'}
-              // disabled={loadingPortal}
+              disabled={loadingPortal}
               className="text-sm"
-              // onClick={redirectToCustomerPortal}
+              onClick={redirectToCustomerPortal}
             >
               Manage Subscription
             </Button>
